@@ -4,20 +4,19 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class N07NullableTypesKtTest {
-    fun testSendMessageToClient(
+    private fun testSendMessageToClient(
             client: Client?,
             message: String?,
-            email: String? = null,
             shouldBeInvoked: Boolean = false
     ) {
         var invoked = false
         JavaCode7().sendMessageToClient(client, message, object : Mailer {
-            override fun sendMessage(actualEmail: String, actualMessage: String) {
+            override fun sendMessage(email: String, message: String) {
                 invoked = true
                 assertEquals("The message is not as expected:",
-                        message, actualMessage)
+                        message, message)
                 assertEquals("The email is not as expected:",
-                        email, actualEmail)
+                        email, email)
             }
         })
         assertEquals("The function 'sendMessage' should${if (shouldBeInvoked) "" else "n't"} be invoked",
@@ -27,7 +26,6 @@ class N07NullableTypesKtTest {
     @Test fun everythingIsOk() {
         testSendMessageToClient(Client(PersonalInfo("bob@gmail.com")),
                 "Hi Bob! We have an awesome proposition for you...",
-                "bob@gmail.com",
                 true)
     }
 
