@@ -11,7 +11,7 @@ class N07NullableTypesKtTest {
             shouldBeInvoked: Boolean = false
     ) {
         var invoked = false
-        sendMessageToClient(client, message, object : Mailer {
+        JavaCode7().sendMessageToClient(client, message, object : Mailer {
             override fun sendMessage(actualEmail: String, actualMessage: String) {
                 invoked = true
                 assertEquals("The message is not as expected:",
