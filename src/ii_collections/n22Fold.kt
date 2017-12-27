@@ -14,8 +14,18 @@ fun whatFoldDoes(): Int {
 
 fun Shop.getSetOfProductsOrderedByEveryCustomer(): Set<Product> {
     // Return the set of products ordered by every customer
-    return customers.fold(allOrderedProducts, {
+    return customers.fold(setOf(), {
         orderedByAll, customer ->
-        todoCollectionTask()
+        orderedByAll.plus(customer.orderedProducts.map { product ->
+            return if (allCustomersHaveOrderedProduct(product)) {
+                setOf(product)
+            } else {
+                setOf()
+            }
+        })
     })
+}
+
+fun Shop.allCustomersHaveOrderedProduct(product: Product): Boolean {
+    return customers.all { it.orderedProducts.contains(product) }
 }
