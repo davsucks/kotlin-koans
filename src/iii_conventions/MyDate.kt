@@ -3,8 +3,16 @@ package iii_conventions
 data class MyDate(val year: Int, val month: Int, val dayOfMonth: Int): Comparable<MyDate> {
     override fun compareTo(other: MyDate): Int {
         return when {
-            other.year == year && other.month == month && other.dayOfMonth == dayOfMonth -> 0
-            other.year <= year && other.month <= month && other.dayOfMonth < dayOfMonth -> 1
+            other.year == year -> when {
+                other.month == month -> when {
+                    other.dayOfMonth == dayOfMonth -> 0
+                    other.dayOfMonth < dayOfMonth -> 1
+                    else -> -1
+                }
+                other.month < month -> 1
+                else -> -1
+            }
+            other.year < year -> 1
             else -> -1
         }
     }
@@ -18,4 +26,4 @@ enum class TimeInterval {
     YEAR
 }
 
-class DateRange(val start: MyDate, val endInclusive: MyDate)
+class DateRange(override val start: MyDate, override val endInclusive: MyDate): ClosedRange<MyDate>

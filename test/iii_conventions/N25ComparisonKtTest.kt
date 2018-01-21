@@ -28,6 +28,12 @@ class N25ComparisonKtTest {
         assertTrue("The date ${first.s} should be before ${second.s}", first < second)
     }
 
+    @Test fun testInclusiveEdgeCase() {
+        val first = MyDate(2013, 7, 10)
+        val second = MyDate(2013, 7, 11)
+        assertTrue("The date ${first.s} should be before ${second.s}", first < second)
+    }
+
     /* If you declare 'compareTo' as an extension function, remove this one to make the code compile */
     operator fun MyDate.compareTo(other: MyDate): Int = todoTask25()
 }
